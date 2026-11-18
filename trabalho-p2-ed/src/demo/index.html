@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador de Heap (Min e Max)</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-modo="min">
+  <header>
+    <h1>Simulador de Heap: Min-Heap e Max-Heap</h1>
+    <p>Inserção (subir) e extração da raiz (descer), passo a passo.</p>
+  </header>
+
+  <main>
+    <section class="card" aria-label="Cenários">
+      <div class="row modo">
+        <span class="lbl">Tipo de heap:</span>
+        <div class="seg" role="radiogroup" aria-label="Tipo de heap">
+          <label><input type="radio" name="modo" value="min" checked><span>Min-Heap</span></label>
+          <label><input type="radio" name="modo" value="max"><span>Max-Heap</span></label>
+        </div>
+      </div>
+
+      <h2>Cenários</h2>
+      <div class="row">
+        <button class="sc" data-key="medio">Caso médio</button>
+        <button class="sc" data-key="melhor">Melhor caso</button>
+        <button class="sc" data-key="pior">Pior caso</button>
+      </div>
+
+      <form id="custom-form" class="row custom">
+        <label>Exemplo customizado (até 15 inteiros):
+          <input id="custom-values" type="text" value="9, 4, 7, 1, 8, 2" placeholder="ex.: 9, 4, 7, 1, 8, 2">
+        </label>
+        <label class="check"><input id="custom-extract" type="checkbox"> extrair tudo no final</label>
+        <button type="submit">Carregar customizado</button>
+      </form>
+      <p id="custom-error" class="error" role="alert"></p>
+      <p id="scenario-info" class="info"></p>
+    </section>
+
+    <section class="card" aria-label="Controles">
+      <div class="row controls">
+        <button id="btn-play" class="primary">▶ Play</button>
+        <button id="btn-pause">⏸ Pausar</button>
+        <button id="btn-step">⏭ Próximo passo</button>
+        <button id="btn-reset">↺ Reiniciar</button>
+        <label class="speed">Velocidade
+          <input id="speed" type="range" min="1" max="10" value="4">
+        </label>
+      </div>
+      <p class="hint">Dica: a seta → do teclado também avança um passo.</p>
+    </section>
+
+    <section class="card viz" aria-label="Visualização">
+      <h2>Árvore (visão lógica)</h2>
+      <svg id="tree" viewBox="0 0 760 290" role="img" aria-label="Árvore do heap"></svg>
+      <h2>Array (visão real na memória)</h2>
+      <div id="array" class="array"></div>
+      <ul class="legend">
+        <li><span class="dot compare"></span> comparando</li>
+        <li><span class="dot swap"></span> trocando</li>
+        <li><span class="dot new"></span> elemento em foco</li>
+        <li><span class="dot done"></span> posição final do passo</li>
+      </ul>
+    </section>
+
+    <section class="card" aria-label="Estado e métricas">
+      <h2>Passo atual</h2>
+      <p id="step-text" class="step-text" aria-live="polite"></p>
+
+      <div class="metrics">
+        <div><span>Passo</span><strong id="m-step">0 / 0</strong></div>
+        <div><span>Comparações</span><strong id="m-comps">0</strong></div>
+        <div><span>Trocas</span><strong id="m-swaps">0</strong></div>
+        <div><span>Tamanho do heap</span><strong id="m-size">0</strong></div>
+        <div><span id="m-topo-label">Topo (menor)</span><strong id="m-topo">—</strong></div>
+        <div class="wide"><span>Operação em andamento</span><strong id="m-op">—</strong></div>
+      </div>
+
+      <h3>Variáveis auxiliares</h3>
+      <div class="vars">
+        <div><span>i (nó atual)</span><strong id="v-i">—</strong></div>
+        <div><span>pai</span><strong id="v-pai">—</strong></div>
+        <div><span>esq (2i+1)</span><strong id="v-esq">—</strong></div>
+        <div><span>dir (2i+2)</span><strong id="v-dir">—</strong></div>
+        <div><span id="v-alvo-label">alvo (menor)</span><strong id="v-alvo">—</strong></div>
+      </div>
+
+      <h3>Valores extraídos (saída)</h3>
+      <p id="output" class="output">—</p>
+
+      <h3>Histórico de passos</h3>
+      <ol id="history" class="history"></ol>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
